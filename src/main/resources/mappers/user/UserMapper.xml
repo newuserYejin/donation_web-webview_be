@@ -7,4 +7,10 @@
         VALUES (#{userId}, #{userPwd});
     </insert>
 
+    <select id="findUserById" parameterType="String" resultType="com.myproject.mybackend.user.model.dto.UserDTO">
+        select *
+        from user
+        where user_id = #{userId}
+    </select>
+
 </mapper>

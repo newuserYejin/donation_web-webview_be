@@ -12,6 +12,9 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  jwt:
+    secret: donationJWTSecretForHS256Algorithm123456
+    access-token-expiration: 3600000
 
 mybatis:
   mapper-locations: mappers/**/*.xml
@@ -19,6 +22,4 @@ mybatis:
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-jwt:
-  secret: your-secret-key
-  access-token-expiration: 3600000  # 1??
+

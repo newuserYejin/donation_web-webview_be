@@ -1,12 +1,14 @@
 package com.myproject.mybackend.user.service;
 
 import com.myproject.mybackend.common.dao.CommonDAO;
+import com.myproject.mybackend.user.model.dto.UserDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -17,7 +19,7 @@ public class UserService {
     private static final String namespace = "user.";
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Autowired
     private CommonDAO commonDAO;
 
@@ -26,7 +28,7 @@ public class UserService {
         System.out.println("service params = " + params);
 
         if (params.get("userPwd") != null) {
-            String enPwd = passwordEncoder.encode(params.get("userPwd").toString());
+            String enPwd = bCryptPasswordEncoder.encode(params.get("userPwd").toString());
 
             params.put("userPwd", enPwd);
 
@@ -41,6 +43,11 @@ public class UserService {
 
     }
 
-    public void loginUser(Map<String, Object> params) {
+    public UserDTO findUserById(String userId) {
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("userId", userId);
+
+        return commonDAO.selectOne(namespace.concat("findUserById"),map);
     }
 }
