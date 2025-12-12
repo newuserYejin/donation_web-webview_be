@@ -17,10 +17,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.nio.charset.Charset;
 import java.util.*;
@@ -65,6 +62,25 @@ public class userController {
 
         return ResponseEntity.ok()
                 .body(new ResponseMessage(200,"회원 정보 조회 성공", result));
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "checkId")
+    @ResponseBody
+    public ResponseEntity<ResponseMessage> checkId(HttpServletRequest request, HttpServletResponse response, Locale locale, Model model, @RequestParam(value = "userId") String reqId){
+        System.out.println("request = " + request);
+        System.out.println("reqId = " + reqId);
+
+        int dupCount = userService.checkDupId(reqId);
+
+        System.out.println("dupCount = " + dupCount);
+
+        if(dupCount > 0){
+            return ResponseEntity.ok()
+                    .body(new ResponseMessage(409, "해당 아이디는 이미 존재합니다.",null));
+        }
+
+        return ResponseEntity.ok()
+                .body(new ResponseMessage(200, null, null));
     }
 
 }

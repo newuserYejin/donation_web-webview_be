@@ -83,7 +83,7 @@ public class SecurityConfig {
                 .httpBasic((auth)->auth.disable())
                 .authorizeHttpRequests((auth)->auth
                         // 접속 허용 설정
-                        .requestMatchers("/api/user/login","/api/user/signup","/").permitAll()
+                        .requestMatchers("/api/user/login","/api/user/signup","/api/user/checkId","/").permitAll()
                         .requestMatchers("/api/admin/*").hasRole("ADMIN")
                         .anyRequest().authenticated());
 

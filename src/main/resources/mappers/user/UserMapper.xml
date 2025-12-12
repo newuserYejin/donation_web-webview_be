@@ -13,4 +13,10 @@
         where user_id = #{userId}
     </select>
 
+    <select id="checkDupId" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where user_id = #{reqId}
+    </select>
+
 </mapper>

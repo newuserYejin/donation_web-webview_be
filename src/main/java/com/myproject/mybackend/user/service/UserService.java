@@ -50,4 +50,8 @@ public class UserService {
 
         return commonDAO.selectOne(namespace.concat("findUserById"),map);
     }
+
+    public int checkDupId(String reqId) {
+        return commonDAO.selectOne(namespace.concat("checkDupId"),reqId);
+    }
 }
